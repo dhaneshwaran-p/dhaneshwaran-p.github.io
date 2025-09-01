@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<script type="text/javascript">
+		function onload_func(){
+		
+			localStorage.setItem('num_of_tasks', 0);
+		
+		}
+		
+		function fetch_task_num(){
+			var num_of_tasks = localStorage.getItem("num_of_tasks");
+			return num_of_tasks;
+		}
+		
+		function add_task(){
+		
+			var num_of_tasks = fetch_task_num();
+			input_id = "task";
+			var output_value = document.getElementById(input_id).value;
+			if (typeof(Storage) !== "undefined") {
+			
+				// Store
+				let task_num = parseInt(num_of_tasks)+1;
+				task_id = "task".concat(task_num);
+				localStorage.setItem(task_id, output_value);
+				localStorage.setItem("num_of_tasks", task_num);
+				// Retrieve
+			} else {
+			
+				output_field.innerHTML = "Sorry, no Web storage support!";
+			}
+		
+		}
+		
+		function get_tasks(){
+		
+			var num_of_tasks = fetch_task_num();
+			for(let i = 1; i <= num_of_tasks; i++){
+			
+				current_task_id = "task".concat(i);
+				print_task_id = "user_task_".concat(i);
+				var x = document.getElementById(print_task_id);
+				x.innerHTML = localStorage.getItem(current_task_id);
+			
+			}
+		
+		}
+		</script>
+		<title>To-do</title>
+	</head>
+	<body onload="onload_func()">
+		<input id="task">Enter your task</input>
+		<button onclick="add_task()">click</button>
+		<button onclick="get_tasks()">click to get tasks</button>
+		<p id="user_task_1"></p>
+		<p id="user_task_2"></p>
+		<p id="user_task_3"></p>
+		<p id="user_task_4"></p>
+		<p id="user_task_5"></p>
+		<p id="user_task_6"></p>
+		<p id="user_task_7"></p>
+		<p id="user_task_8"></p>
+		<p id="user_task_9"></p>
+		<p id="user_task_10"></p>
+	</body>
+</html>
