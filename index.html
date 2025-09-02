@@ -1,118 +1,74 @@
 <!DOCTYPE html>
-<html>
-	<!-- Copyright 2025 P Dhaneshwaran
-	This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
-	-->
+<html lang="en">
 	<head>
-		<meta charset="UTF-8">
-		<script>
-			function onload_func(){
-				
-		      localStorage.setItem('no_of_tasks', 0);
-		    
-			}
+		<!-- Copyright 2025 P Dhaneshwaran
+		This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+		This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+		You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+		-->
+		<script type="text/javascript">
+		function onload_func(){
 			
-			function fetch_task_num(){
-				var num_of_tasks = localStorage.getItem("num_of_tasks");
-				return num_of_tasks;
+			localStorage.setItem('num_of_tasks', 0);
+			
+		}
+		
+		function fetch_task_num(){
+			var num_of_tasks = localStorage.getItem("num_of_tasks");
+			return num_of_tasks;
+		}
+		
+		function add_task(){
+		
+			var num_of_tasks = fetch_task_num();
+			input_id = "task";
+			var output_value = document.getElementById(input_id).value;
+			if (typeof(Storage) !== "undefined") {
+			
+				// Store
+				let task_num = parseInt(num_of_tasks)+1;
+				task_id = "task".concat(task_num);
+				localStorage.setItem(task_id, output_value);
+				localStorage.setItem("num_of_tasks", task_num);
+				// Retrieve
+			} else {
+			
+				output_field.innerHTML = "Sorry, no Web storage support!";
 			}
 		
-			function add_task(){
+		}
 		
-				var num_of_tasks = fetch_task_num();
-				input_id = "task";
-				var output_value = document.getElementById(input_id).value;
-				if (typeof(Storage) !== "undefined") {
-				
-					// Store
-					let task_num = parseInt(num_of_tasks)+1;
-					task_id = "task".concat(task_num);
-					localStorage.setItem(task_id, output_value);
-					localStorage.setItem("num_of_tasks", task_num);
-					// Retrieve
-				} else {
-				
-					output_field.innerHTML = "Sorry, no Web storage support!";
-				}
+		function get_tasks(){
+		
+			var num_of_tasks = fetch_task_num();
+			for(let i = 1; i <= num_of_tasks; i++){
+			
+				current_task_id = "task".concat(i);
+				print_task_id = "user_task_".concat(i);
+				var x = document.getElementById(print_task_id);
+				x.innerHTML = localStorage.getItem(current_task_id);
 			
 			}
-			
-			function get_tasks(){
-			
-				var num_of_tasks = fetch_task_num();
-				for(let i = 1; i <= num_of_tasks; i++){
-				
-					current_task_id = "task".concat(i);
-					print_task_id = "user_task_".concat(i);
-					var x = document.getElementById(print_task_id);
-					x.innerHTML = localStorage.getItem(current_task_id);
-				
-				}
-			
-			}
-			
-			function loadPage(button) {
-		    			    	
-		    	const buttonName = button.getAttribute("name");
-		    	const pageDiv = document.getElementById("pageDiv");
-		    	
-		    	if(buttonName=="btn-home") {
-		    		pageDiv.innerHTML = '<p>Home Page</p>';
-					for (let i = 1; i <=10; i++){
-						
-						let clear_task_id = "user_task_" + toString(i)
-						x = document.getElementById(clear_task_id);
-						x.innerHTML = "";
-						
-					}
-		    	} else if (buttonName=="btn-edit") {
-		    		pageDiv.innerHTML = '<p>Added task</p>';
-					add_task();
-		    	} else {
-		    		pageDiv.innerHTML = '<p>Viewing Page</p>';
-					get_tasks();
-		    	}		    			    	
-		    }
+		
+		}
 		</script>
-		<style>
-			.btn_div {text-align: center; margin-top: 25px; padding: 25px;}
-			.btn {padding: 10px 20px; background-color: green; color: white; border: none; border-radius: 7px;}
-		</style>
-		<title>To-Do List Application</title>
+		<title>To-do</title>
 	</head>
 	<body onload="onload_func()">
-			<div style="display: flex; justify-content: center;">To-Do</div>	
-			
-			
-			<div style="display: flex; justify-content: center;">				
-				<div class="btn_div">
-				  <button name="btn-home" class="btn" onclick="loadPage(this)">Home</button>
-				</div>
-				<div class="btn_div">
-				  <button name="btn-edit" class="btn" onclick="loadPage(this)">Add Task</button>
-				</div>
-				<div class="btn_div">
-				  <button  name="btn-view" class="btn" onclick="loadPage(this)">View Tasks</button>
-				</div>
-			</div>
-			
-			<input id="task">Enter your task</input>
-			
-			<p id="pageDiv"/>
-			<p id="user_task_1"></p>
-			<p id="user_task_2"></p>
-			<p id="user_task_3"></p>
-			<p id="user_task_4"></p>
-			<p id="user_task_5"></p>
-			<p id="user_task_6"></p>
-			<p id="user_task_7"></p>
-			<p id="user_task_8"></p>
-			<p id="user_task_9"></p>
-			<p id="user_task_10"></p>
-			
+		<input id="task">Enter your task</input>
+		<button onclick="add_task()">click</button>
+		<button onclick="get_tasks()">click to get tasks</button>
+		<p id="user_task_1"></p>
+		<p id="user_task_2"></p>
+		<p id="user_task_3"></p>
+		<p id="user_task_4"></p>
+		<p id="user_task_5"></p>
+		<p id="user_task_6"></p>
+		<p id="user_task_7"></p>
+		<p id="user_task_8"></p>
+		<p id="user_task_9"></p>
+		<p id="user_task_10"></p>
 	</body>
 </html>
