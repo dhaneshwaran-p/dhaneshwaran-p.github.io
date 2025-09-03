@@ -16,10 +16,10 @@
 					
 					const key = localStorage.key(i); 
 					const value = localStorage.getItem(key); 
-					
+										
 					const radiobutton = document.createElement('input');
 					radiobutton.type = 'radio';
-					radiobutton.id = value;
+					radiobutton.id = key;
 					radiobutton.name = 'tasklist';
 		
 					const label = document.createElement('label');
@@ -50,9 +50,10 @@
 				const label = document.createElement('label');
 				const task = document.getElementById('task');
 				label.textContent = task.value;
-				localStorage.setItem(task.value, task.value);
+				const timestamp = Date.now();				
+				localStorage.setItem("newt"+timestamp+task.value, task.value);
 				
-				radiobutton.id = task.value;
+				radiobutton.id = "newt"+timestamp+task.value;
 				task.value = "";
 		
 				const tasks = document.getElementById('tasksContainer');
@@ -68,7 +69,7 @@
 				
 				const selectedRadio = document.querySelector('input[name="tasklist"]:checked');
 				if (selectedRadio) {
-					
+				
 				  localStorage.removeItem(selectedRadio.id);
 				  location.reload();
 				} 
@@ -81,9 +82,9 @@
 				if (selectedRadio) {		  
 				  
 				  const task = document.getElementById('task');
-				  task.value = selectedRadio.id;
-				  localStorage.setItem(task.value, task.value);
-				  localStorage.removeItem(task.value);
+				  task.value = localStorage.getItem(selectedRadio.id);
+				  localStorage.setItem("newt"+timestamp+task.value, task.value);
+				  localStorage.removeItem(selectedRadio.id);
 				} 
 			}
 			
@@ -96,7 +97,7 @@
 		<br />
 		<div style="display: flex; justify-content: center;">
 			<input type="text" class="txt" id="task" name="task" placeHolder="Enter Task" />&nbsp;&nbsp;
-			<input type="button" class="btn" name="addtask" value="Add / Edit Existing" onclick="addTask()" />&nbsp;&nbsp;
+			<input type="button" class="btn" name="addtask" value="Add / Update" onclick="addTask()" />&nbsp;&nbsp;
 			<input type="button" class="btn-clr" name="clearStorage" value="Clear Storage" onclick="clearStorage()" />
 		</div>
 		<br />
@@ -105,9 +106,10 @@
 			<div  id="tasksContainer"></div>
 		</div>
 		<br />
+		
 		<div style="display: flex; justify-content: center;">
 			<input type="button" class="btn" name="addtask" value="Delete" onclick="deleteTask()" />&nbsp;&nbsp;
 			<input type="button" class="btn" name="addtask" value="Edit" onclick="editTask()" />
 		</div>		
 	</body>
-</html>
+</html>7
